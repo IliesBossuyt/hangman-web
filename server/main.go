@@ -27,8 +27,10 @@ func main() {
 	http.HandleFunc("/gameeasy", GameEasy)
 	http.HandleFunc("/gamehard", GameHard)
 
-	fs := http.FileServer(http.Dir("./static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	//fs := http.FileServer(http.Dir("./server/"))
+	http.Handle("/server/", http.StripPrefix("/server/", http.FileServer(http.Dir("server"))))
+
+	//http.Handle("/server/", http.StripPrefix("/server/", fs))
 	http.HandleFunc("/hangman", Handler) // Ici, on redirige vers /hangman pour effectuer les fonctions POST
 	http.ListenAndServe(":8080", nil)
 	// On lance le serveur local sur le port 8080

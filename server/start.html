@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<title>Hangman</title>
+	<meta charset="utf-8">
+	<title>Hangman</title>
+	<link rel="stylesheet" href="/server/start.css">
 </head>
-<form action="/difficult" method="post">
-	<button name="button" value="jouer">Jouer</button>
-</form>
-<form action="/" method="post">
-	<button name="button" value="reprendre">Reprendre</button>
-</form>
-<form action="/" method="post">
-	<button name="button" value="options">Options</button>
-</form>
-<form action="/" method="post">
-	<button name="button" value="sons">Sons</button>
-</form>
+<body>
+	<div class ="container">
+		<div class ="start-box">
+		<div>
+		<h1>HANGMAN</h1>
+		</div>
+
+	<div class="buttons">
+		<a href="difficult.html" class ="button">
+	<form action="/difficult" method="post">
+		<button id="button" name="button" value="jouer">Jouer
+			
+		</button>
+		
+	</form></a>
+	<form action="/" method="post">
+		<button id="button" name="button" value="reprendre">Reprendre</button>
+	</form>
+	<form action="/" method="post">
+		<button id="button" name="button" value="options">Options</button>
+	</form>
+	<form action="/" method="post">
+		<button id="sons" name="button" value="sons">Sons</button>
+	</form>
+</div>
+	</div>
+</div>
+</body>
+</html>
