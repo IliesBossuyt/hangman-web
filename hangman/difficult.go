@@ -1,3 +1,4 @@
+
 package main
 
 import (
@@ -7,6 +8,15 @@ import (
 )
 
 var mots []string
+
+type Jeu struct {
+	MotADeviner      string
+	LettresaTrouvées []string
+	ViesRestantes    int
+	LettresProposées []string
+	MotProposés      []string
+	EtapesPendu      []string
+}
 
 // Fonction pour créer le jeu en mode facile
 func NouveauJeuFacile() *Jeu {
