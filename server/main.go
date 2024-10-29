@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"html/template"
 	"math/rand"
 	"net/http"
@@ -22,6 +23,9 @@ type Jeu struct {
 
 func main() {
 	http.HandleFunc("/", Handler) // Ici, quand on arrive sur la racine, on appelle la fonction Handler
+	http.HandleFunc("/difficult", Difficult)
+	http.HandleFunc("/gameeasy", GameEasy)
+	http.HandleFunc("/gamehard", GameHard)
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
@@ -31,22 +35,37 @@ func main() {
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
-	tmpl := template.Must(template.ParseFiles("index.html"))
 	if r.Method == "POST" {
-		buttonValue := r.FormValue("button")
-		if buttonValue == "Bouton 1" {
-			http.Redirect(w, r, "/gameeasy", http.StatusFound)
-			http.HandleFunc("/gameeasy", GameEasy)
+		// Récupérer le mot soumis
+		mot := r.FormValue("mot")
+
+		fmt.Println("Le mot soumis est :", mot)
+
+		// Répondre avec un JSON pour indiquer que le mot a été soumis avec succès
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(`{"success": true}`))
+	} else {
+		// Générer un mot aléatoirement
+		mot := NouveauJeuFacile().MotADeviner
+
+		// Stocker le mot dans un cookie
+		cookie := &http.Cookie{
+			Name:  "mot",
+			Value: mot,
+			Path:  "/",
 		}
+		http.SetCookie(w, cookie)
+
+		// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
+		tmpl := template.Must(template.ParseFiles("start.html"))
+		// J'execute le template avec les données
+		tmpl.Execute(w, nil)
 	}
-	if r.Method == "POST" {
-		buttonValue := r.FormValue("button")
-		if buttonValue == "Bouton 2" {
-			http.Redirect(w, r, "/gamehard", http.StatusFound)
-			http.HandleFunc("/gamehard", GameHard)
-		}
-	}
+}
+
+func Difficult(w http.ResponseWriter, r *http.Request) {
+	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier difficult.html
+	tmpl := template.Must(template.ParseFiles("difficult.html"))
 	// J'execute le template avec les données
 	tmpl.Execute(w, nil)
 
@@ -58,6 +77,10 @@ func GameEasy(w http.ResponseWriter, r *http.Request) {
 	// Je crée une variable qui définit ma structure
 	data := Jeu{
 		MotADeviner: NouveauJeuFacile().MotADeviner,
+	}
+	if r.Method == "POST" {
+		mot := r.FormValue("mot")
+		fmt.Println("Le mot entré est :", mot)
 	}
 	// J'execute le template avec les données
 	tmpl.Execute(w, data)
@@ -76,17 +99,11 @@ func GameHard(w http.ResponseWriter, r *http.Request) {
 
 }
 
-
 var mots []string
 
 func NouveauJeuFacile() *Jeu {
-	// Charger les mots selon la difificulté des mots choisits
-	mode := os.Args[1]
-	if mode == "hard" {
-		mots = ChargerMotsDepuisFichierHard()
-	} else if mode == "normal" {
-		mots = ChargerMotsDepuisFichier()
-	}
+	// Charger les mots
+	mots = ChargerMotsDepuisFichier()
 
 	// Choisir un mot aléatoire
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -113,13 +130,8 @@ func NouveauJeuFacile() *Jeu {
 
 // Fonction pour créer le jeu en mode difficile
 func NouveauJeuDifficile() *Jeu {
-	// Charger les mots selon la difificulté des mots choisits
-	mode := os.Args[1]
-	if mode == "hard" {
-		mots = ChargerMotsDepuisFichierHard()
-	} else if mode == "normal" {
-		mots = ChargerMotsDepuisFichier()
-	}
+	// Charger les mots
+	mots = ChargerMotsDepuisFichierHard()
 
 	// Choisir un mot aléatoire
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
