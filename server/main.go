@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"html/template"
 	"math/rand"
 	"net/http"
@@ -12,96 +11,321 @@ import (
 )
 
 // Je crée ma structure
-type Jeu struct {
+type Engine struct {
 	MotADeviner      string
 	LettresaTrouvées []string
 	ViesRestantes    int
 	LettresProposées []string
 	MotProposés      []string
-	EtapesPendu      []string
+	EtapesPendu      string
+	Message          string
 }
 
 func main() {
-	http.HandleFunc("/", Handler) // Ici, quand on arrive sur la racine, on appelle la fonction Handler
-	http.HandleFunc("/difficult", Difficult)
-	http.HandleFunc("/gameeasy", GameEasy)
-	http.HandleFunc("/gamehard", GameHard)
+	var jeu Engine
+	http.HandleFunc("/", jeu.Handler) // Ici, quand on arrive sur la racine, on appelle la fonction Handler
+	http.HandleFunc("/difficult", jeu.Difficult)
+	http.HandleFunc("/gameeasy", jeu.GameEasy)
+	http.HandleFunc("/gamehard", jeu.GameHard)
+	http.HandleFunc("/pause", jeu.Pause)
 
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.HandleFunc("/hangman", Handler) // Ici, on redirige vers /hangman pour effectuer les fonctions POST
+	http.HandleFunc("/hangman", jeu.Handler) // Ici, on redirige vers /hangman pour effectuer les fonctions POST
 	http.ListenAndServe(":8080", nil)
 	// On lance le serveur local sur le port 8080
 }
 
-func Handler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		// Récupérer le mot soumis
-		mot := r.FormValue("mot")
+func (jeu *Engine) Handler(w http.ResponseWriter, r *http.Request) {
+	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
+	tmpl := template.Must(template.ParseFiles("start.html"))
 
-		fmt.Println("Le mot soumis est :", mot)
+	// Définir le nombre de vies par défaut a 11
+	jeu.ViesRestantes = 11
 
-		// Répondre avec un JSON pour indiquer que le mot a été soumis avec succès
-		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte(`{"success": true}`))
-	} else {
-		// Générer un mot aléatoirement
-		mot := NouveauJeuFacile().MotADeviner
-
-		// Stocker le mot dans un cookie
-		cookie := &http.Cookie{
-			Name:  "mot",
-			Value: mot,
-			Path:  "/",
-		}
-		http.SetCookie(w, cookie)
-
-		// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
-		tmpl := template.Must(template.ParseFiles("start.html"))
-		// J'execute le template avec les données
-		tmpl.Execute(w, nil)
-	}
-}
-
-func Difficult(w http.ResponseWriter, r *http.Request) {
-	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier difficult.html
-	tmpl := template.Must(template.ParseFiles("difficult.html"))
 	// J'execute le template avec les données
 	tmpl.Execute(w, nil)
+}
+
+func (jeu *Engine) Pause(w http.ResponseWriter, r *http.Request) {
+	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
+	tmpl := template.Must(template.ParseFiles("pause.html"))
+
+	if r.Method == "POST" {
+		buttonValue := r.FormValue("button")
+		if buttonValue == "Nouvellepartie" {
+			jeu.ViesRestantes = 11
+			http.Redirect(w, r, "/difficult", http.StatusFound)
+		}
+	}
+
+	// J'execute le template avec les données
+	tmpl.Execute(w, nil)
+}
+
+func (jeu *Engine) Difficult(w http.ResponseWriter, r *http.Request) {
+	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier difficult.html
+	tmpl := template.Must(template.ParseFiles("difficult.html"))
+
+	// Je crée une variable qui définit ma structure
+	data := Engine{
+		ViesRestantes: jeu.ViesRestantes,
+	}
+
+	// Je redirige vers la page de jeu facile
+	if r.Method == "POST" {
+		buttonValue := r.FormValue("button")
+		if buttonValue == "facile" {
+			jeu.NouveauJeuFacile()
+			jeu.EtapePendu()
+			http.Redirect(w, r, "/gameeasy", http.StatusFound)
+		}
+	}
+
+	// Je redirige vers la page de jeu difficile
+	if r.Method == "POST" {
+		buttonValue := r.FormValue("button")
+		if buttonValue == "difficile" {
+			jeu.NouveauJeuDifficile()
+			jeu.EtapePendu()
+			http.Redirect(w, r, "/gamehard", http.StatusFound)
+		}
+	}
+
+	// Augmenter le nombre de vies de 1
+	if r.Method == "POST" {
+		buttonValue := r.FormValue("button")
+		if buttonValue == "button+" && jeu.ViesRestantes < 11 {
+			jeu.ViesRestantes++
+			w.Header().Set("Refresh", "0")
+
+		}
+	}
+
+	// Diminuer le nombre de vies de 1
+	if r.Method == "POST" {
+		buttonValue := r.FormValue("button")
+		if buttonValue == "button-" && jeu.ViesRestantes > 1 {
+			jeu.ViesRestantes--
+			w.Header().Set("Refresh", "0")
+		}
+	}
+
+	// J'execute le template avec les données
+	tmpl.Execute(w, data)
 
 }
 
-func GameEasy(w http.ResponseWriter, r *http.Request) {
+func (jeu *Engine) GameEasy(w http.ResponseWriter, r *http.Request) {
 	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
 	tmpl := template.Must(template.ParseFiles("gameeasy.html"))
+
 	// Je crée une variable qui définit ma structure
-	data := Jeu{
-		MotADeviner: NouveauJeuFacile().MotADeviner,
+	data := Engine{
+		MotADeviner:      strings.Join(jeu.LettresaTrouvées, " "),
+		ViesRestantes:    jeu.ViesRestantes,
+		LettresProposées: jeu.LettresProposées,
+		MotProposés:      jeu.MotProposés,
+		Message:          jeu.Message,
+		EtapesPendu:      jeu.EtapesPendu,
 	}
+
+	jeu.Message = ""
+
 	if r.Method == "POST" {
 		mot := r.FormValue("mot")
-		fmt.Println("Le mot entré est :", mot)
+
+		// Vérifier si la lettre est déjà proposée
+		if contient(jeu.LettresProposées, mot) {
+			jeu.Message = ("Vous avez déjà proposé cette lettre.")
+			http.Redirect(w, r, "/gameeasy", http.StatusFound)
+			return
+		}
+
+		// Vérifier si le mot est déjà proposé
+		if contient(jeu.MotProposés, mot) {
+			jeu.Message = ("Vous avez déjà proposé ce mot.")
+			http.Redirect(w, r, "/gameeasy", http.StatusFound)
+			return
+		}
+
+		// Vérifier si la lettre est dans le mot
+		if strings.Contains(jeu.MotADeviner, mot) {
+			for i := 0; i < len(jeu.MotADeviner); i++ {
+				if string(jeu.MotADeviner[i]) == mot {
+					jeu.LettresaTrouvées[i] = mot
+					jeu.Message = ("Bonne lettre !")
+					w.Header().Set("Refresh", "0")
+				}
+			}
+		} else if mot <= "z" && mot >= "a" && len(mot) == 1 {
+			jeu.Message = ("Mauvaise lettre !")
+			jeu.ViesRestantes--
+			jeu.EtapePendu()
+			w.Header().Set("Refresh", "0")
+		}
+
+		// Ajouter la lettre à la liste des lettres proposées
+		if mot <= "z" && mot >= "a" && len(mot) == 1 {
+			jeu.LettresProposées = append(jeu.LettresProposées, mot)
+		}
+
+		// Ajouter le mot à la liste des mots proposés
+		if len(mot) > 2 {
+			jeu.MotProposés = append(jeu.MotProposés, mot)
+		}
+
+		// Vérifier si la saisie est égal au mot
+		if mot == jeu.MotADeviner {
+			jeu.Message = ("Félicitations, vous avez deviné le mot : " + jeu.MotADeviner)
+			w.Header().Set("Refresh", "0")
+			//End()
+		} else if len(mot) > 2 {
+			jeu.ViesRestantes -= 2
+			jeu.Message = ("Mot incorrect !")
+			jeu.EtapePendu()
+			w.Header().Set("Refresh", "0")
+		}
+
+	}
+
+	// Fin du jeu
+	if jeu.ViesRestantes == 0 {
+		jeu.Message = ("Vous avez perdu. Le mot était : " + jeu.MotADeviner)
+		//End()
+	} else if strings.Join(jeu.LettresaTrouvées, "") == jeu.MotADeviner {
+		jeu.Message = ("Félicitations, vous avez deviné le mot : " + jeu.MotADeviner)
+		//End()
 	}
 	// J'execute le template avec les données
 	tmpl.Execute(w, data)
 
 }
 
-func GameHard(w http.ResponseWriter, r *http.Request) {
+func (jeu *Engine) GameHard(w http.ResponseWriter, r *http.Request) {
 	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
 	tmpl := template.Must(template.ParseFiles("gamehard.html"))
+
 	// Je crée une variable qui définit ma structure
-	data := Jeu{
-		MotADeviner: NouveauJeuDifficile().MotADeviner,
+	data := Engine{
+		MotADeviner:      strings.Join(jeu.LettresaTrouvées, " "),
+		ViesRestantes:    jeu.ViesRestantes,
+		LettresProposées: jeu.LettresProposées,
+		MotProposés:      jeu.MotProposés,
+		Message:          jeu.Message,
+	}
+
+	jeu.Message = ""
+
+	if r.Method == "POST" {
+		mot := r.FormValue("mot")
+
+		// Vérifier si la lettre est déjà proposée
+		if contient(jeu.LettresProposées, mot) {
+			jeu.Message = ("Vous avez déjà proposé cette lettre.")
+			http.Redirect(w, r, "/gamehard", http.StatusFound)
+			return
+		}
+
+		// Vérifier si le mot est déjà proposé
+		if contient(jeu.MotProposés, mot) {
+			jeu.Message = ("Vous avez déjà proposé ce mot.")
+			http.Redirect(w, r, "/gamehard", http.StatusFound)
+			return
+		}
+
+		// Vérifier si la lettre est dans le mot
+		if strings.Contains(jeu.MotADeviner, mot) {
+			for i := 0; i < len(jeu.MotADeviner); i++ {
+				if string(jeu.MotADeviner[i]) == mot {
+					jeu.LettresaTrouvées[i] = mot
+					jeu.Message = ("Bonne lettre !")
+					w.Header().Set("Refresh", "0")
+				}
+			}
+		} else if mot <= "z" && mot >= "a" && len(mot) == 1 {
+			jeu.Message = ("Mauvaise lettre !")
+			jeu.ViesRestantes--
+			jeu.EtapePendu()
+			w.Header().Set("Refresh", "0")
+		}
+
+		// Ajouter la lettre à la liste des lettres proposées
+		if mot <= "z" && mot >= "a" && len(mot) == 1 {
+			jeu.LettresProposées = append(jeu.LettresProposées, mot)
+		}
+
+		// Ajouter le mot à la liste des mots proposés
+		if len(mot) > 2 {
+			jeu.MotProposés = append(jeu.MotProposés, mot)
+		}
+
+		// Vérifier si la saisie est égal au mot
+		if mot == jeu.MotADeviner {
+			jeu.Message = ("Félicitations, vous avez deviné le mot : " + jeu.MotADeviner)
+			w.Header().Set("Refresh", "0")
+			//End()
+		} else if len(mot) > 2 {
+			jeu.ViesRestantes -= 2
+			jeu.Message = ("Mot incorrect !")
+			jeu.EtapePendu()
+			w.Header().Set("Refresh", "0")
+		}
+
+	}
+
+	// Fin du jeu
+	if jeu.ViesRestantes == 0 {
+		jeu.Message = ("Vous avez perdu. Le mot était : " + jeu.MotADeviner)
+		//End()
+	} else if strings.Join(jeu.LettresaTrouvées, "") == jeu.MotADeviner {
+		jeu.Message = ("Félicitations, vous avez deviné le mot : " + jeu.MotADeviner)
+		//End()
 	}
 	// J'execute le template avec les données
 	tmpl.Execute(w, data)
 
+}
+
+func (jeu *Engine) EtapePendu() {
+	if jeu.ViesRestantes == 11 {
+		jeu.EtapesPendu = "/static/1.png"
+	}
+	if jeu.ViesRestantes == 10 {
+		jeu.EtapesPendu = "/static/2.png"
+	}
+	if jeu.ViesRestantes == 9 {
+		jeu.EtapesPendu = "/static/3.png"
+	}
+	if jeu.ViesRestantes == 8 {
+		jeu.EtapesPendu = "/static/4.png"
+	}
+	if jeu.ViesRestantes == 7 {
+		jeu.EtapesPendu = "/static/5.png"
+	}
+	if jeu.ViesRestantes == 6 {
+		jeu.EtapesPendu = "/static/6.png"
+	}
+	if jeu.ViesRestantes == 5 {
+		jeu.EtapesPendu = "/static/7.png"
+	}
+	if jeu.ViesRestantes == 4 {
+		jeu.EtapesPendu = "/static/8.png"
+	}
+	if jeu.ViesRestantes == 3 {
+		jeu.EtapesPendu = "/static/9.png"
+	}
+	if jeu.ViesRestantes == 2 {
+		jeu.EtapesPendu = "/static/10.png"
+	}
+	if jeu.ViesRestantes == 1 {
+		jeu.EtapesPendu = "/static/11.png"
+	}
 }
 
 var mots []string
 
-func NouveauJeuFacile() *Jeu {
+func (jeu *Engine) NouveauJeuFacile() {
 	// Charger les mots
 	mots = ChargerMotsDepuisFichier()
 
@@ -115,21 +339,24 @@ func NouveauJeuFacile() *Jeu {
 	// Enlever les accents du mot
 	motSansAccents := enleverAccents(motSansMajuscules)
 
-	// Charger les étapes du pendu depuis le fichier hangman.txt
-	etapes := chargerEtapesPendu("hangman.txt")
+	jeu.MotADeviner = motSansAccents
+	jeu.LettresaTrouvées = make([]string, len(motSansAccents))
+	jeu.LettresProposées = []string{}
+	jeu.MotProposés = []string{}
 
-	return &Jeu{
-		MotADeviner:      motSansAccents,
-		LettresaTrouvées: make([]string, len(motSansAccents)),
-		ViesRestantes:    10,
-		LettresProposées: []string{},
-		MotProposés:      []string{},
-		EtapesPendu:      etapes, // Associer les étapes du pendu
+	// Initialise les lettres à trouvées à "_"
+	for i := range jeu.LettresaTrouvées {
+		if jeu.LettresaTrouvées[i] == " " {
+			jeu.LettresaTrouvées[i] = " "
+		} else {
+			jeu.LettresaTrouvées[i] = "_"
+		}
 	}
+
 }
 
 // Fonction pour créer le jeu en mode difficile
-func NouveauJeuDifficile() *Jeu {
+func (jeu *Engine) NouveauJeuDifficile() {
 	// Charger les mots
 	mots = ChargerMotsDepuisFichierHard()
 
@@ -137,19 +364,24 @@ func NouveauJeuDifficile() *Jeu {
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
 	motAleatoire := mots[rng.Intn(len(mots))]
 
+	// Enlever les majuscules du mot
+	motSansMajuscules := enleverMajuscules(motAleatoire)
+
 	// Enlever les accents du mot
-	motSansAccents := enleverAccents(motAleatoire)
+	motSansAccents := enleverAccents(motSansMajuscules)
 
-	// Charger les étapes du pendu depuis le fichier hangman.txt
-	etapes := chargerEtapesPendu("hangman.txt")
+	jeu.MotADeviner = motSansAccents
+	jeu.LettresaTrouvées = make([]string, len(motSansAccents))
+	jeu.LettresProposées = []string{}
+	jeu.MotProposés = []string{}
 
-	return &Jeu{
-		MotADeviner:      motSansAccents,
-		LettresaTrouvées: make([]string, len(motSansAccents)),
-		ViesRestantes:    5,
-		LettresProposées: []string{},
-		MotProposés:      []string{},
-		EtapesPendu:      etapes, // Associer les étapes du pendu
+	// Initialise les lettres à trouvées à "_"
+	for i := range jeu.LettresaTrouvées {
+		if jeu.LettresaTrouvées[i] == " " {
+			jeu.LettresaTrouvées[i] = " "
+		} else {
+			jeu.LettresaTrouvées[i] = "_"
+		}
 	}
 }
 
@@ -170,32 +402,6 @@ func enleverMajuscules(mot string) string {
 		mot = strings.Replace(mot, accent, nonMajuscules[i], -1)
 	}
 	return mot
-}
-
-// Fonction pour charger les étapes du pendu depuis le fichier hangman.txt
-func chargerEtapesPendu(cheminFichier string) []string {
-	fichier, _ := os.Open(cheminFichier)
-	defer fichier.Close()
-
-	var etapes []string
-	var etape strings.Builder
-
-	scanner := bufio.NewScanner(fichier)
-	for scanner.Scan() {
-		ligne := scanner.Text()
-		if ligne == "" {
-			etapes = append(etapes, etape.String())
-			etape.Reset()
-		} else {
-			etape.WriteString(ligne + "\n")
-		}
-	}
-
-	if etape.Len() > 0 {
-		etapes = append(etapes, etape.String())
-	}
-
-	return etapes
 }
 
 // Fonction pour charger les mots depuis le fichier "words.txt"
@@ -235,4 +441,14 @@ func ChargerMotsDepuisFichierHard() []string {
 	}
 
 	return mots
+}
+
+// Fonction pour vérifier si un mot est dans un slice
+func contient(slice []string, item string) bool {
+	for _, v := range slice {
+		if v == item {
+			return true
+		}
+	}
+	return false
 }

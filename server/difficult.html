@@ -3,12 +3,19 @@
 <head>
 <title>Hangman</title>
 </head>
-<form action="/gameeasy" method="post">
+<form method="post">
 	<button name="button" value="facile">Facile</button>
 </form>
-<form action="/gamehard" method="post">
+<form method="post">
 	<button name="button" value="difficile">Difficile</button>
 </form>
-<form action="/" method="post">
+<form method="post">
 	<button name="button" value="bonus">Bonus</button>
 </form>
+<form method="post">
+	<button name="button" value="button+">+</button>
+</form>
+<form method="post">
+	<button name="button" value="button-">-</button>
+</form>
+<h6>Nombre de vies : {{ .ViesRestantes }}</h6>

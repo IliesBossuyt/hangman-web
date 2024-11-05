@@ -83,7 +83,7 @@ func (j *Jeu) Jouer() {
 			continue
 		}
 
-		// Ajouter la lettre à la liste des lettres trouvées
+		// Ajouter la lettre à la liste des lettres proposées
 		if lettre <= "z" && lettre >= "a" && len(lettre) == 1 {
 			j.LettresProposées = append(j.LettresProposées, lettre)
 		}
