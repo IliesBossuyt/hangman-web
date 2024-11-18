@@ -1,4 +1,4 @@
-package main
+package engine
 
 // Je crée ma structure
 type Engine struct {
@@ -10,6 +10,7 @@ type Engine struct {
 	EtapesPendu      string
 	Message          string
 	Musique          bool
+	Score            int
+	Value            int
+	MeilleurScore    int
 }
-
-var jeu Engine

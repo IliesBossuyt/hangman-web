@@ -1,3 +1,3 @@
-module hangmanweb
+module engine
 
 go 1.23.0

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="/static/css/difficult.css">
+</head>
+<body> <div class="container">
+            <h1>Jeu du Pendu</h1>
+            <form method="post">
+                <button class="button" name="button" value="facile">Facile</button>
+            </form>
+            <form method="post">
+                <button class="button" name="button" value="difficile">Difficile</button>
+            </form>
+            <form method="post">
+                <button class="button" name="button" value="bonus">Bonus</button>
+            </form>
+        </div>
+
+       
+        <div class="vies-container">
+            <form method="post">
+                <button class="button" name="button" value="button+">+</button> 
+            </form>
+                <p>Vies  {{ .ViesRestantes }}</p>
+            </form>
+            <form method="post">
+                <button class="button" name="button" value="button-">-</button>
+            </form>
+        </div>
+
+        <div class="back-container">
+            <form action="/start" method="post">
+                <button class="button"name="button" value="Back">Back</button>
+            </form>
+        </div>
+</body>
+</html>
+
+

@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"html/template"
@@ -7,16 +7,24 @@ import (
 
 func (jeu *Engine) Loose(w http.ResponseWriter, r *http.Request) {
 	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
-	tmpl := template.Must(template.ParseFiles("../html/loose.html"))
+	tmpl := template.Must(template.ParseFiles("front/template/loose.html"))
 
 	data := Engine{
-		MotADeviner: jeu.MotADeviner,
+		MotADeviner:   jeu.MotADeviner,
+		Score:         jeu.Score,
+		MeilleurScore: jeu.MeilleurScore,
+	}
+
+	if jeu.MeilleurScore < jeu.Score {
+		jeu.MeilleurScore = jeu.Score
+		w.Header().Set("Refresh", "0")
 	}
 
 	if r.Method == "POST" {
 		buttonValue := r.FormValue("button")
 		if buttonValue == "Nouvellepartie" {
 			jeu.ViesRestantes = 11
+			jeu.Score = 0
 			http.Redirect(w, r, "/difficult", http.StatusFound)
 		}
 	}

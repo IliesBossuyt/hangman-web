@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"html/template"
@@ -8,7 +8,7 @@ import (
 
 func (jeu *Engine) GameHard(w http.ResponseWriter, r *http.Request) {
 	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
-	tmpl := template.Must(template.ParseFiles("../html/gamehard.html"))
+	tmpl := template.Must(template.ParseFiles("front/template/gamehard.html"))
 
 	// Je crée une variable qui définit ma structure
 	data := Engine{
@@ -18,6 +18,7 @@ func (jeu *Engine) GameHard(w http.ResponseWriter, r *http.Request) {
 		MotProposés:      jeu.MotProposés,
 		Message:          jeu.Message,
 		EtapesPendu:      jeu.EtapesPendu,
+		Score:            jeu.Score,
 	}
 
 	jeu.Message = ""
@@ -45,6 +46,7 @@ func (jeu *Engine) GameHard(w http.ResponseWriter, r *http.Request) {
 				if string(jeu.MotADeviner[i]) == mot {
 					jeu.LettresaTrouvées[i] = mot
 					jeu.Message = ("Bonne lettre !")
+					jeu.Score += jeu.Value
 					w.Header().Set("Refresh", "0")
 				}
 			}
@@ -68,6 +70,7 @@ func (jeu *Engine) GameHard(w http.ResponseWriter, r *http.Request) {
 		// Vérifier si la saisie est égal au mot
 		if mot == jeu.MotADeviner {
 			http.Redirect(w, r, "/win", http.StatusFound)
+			jeu.Score += jeu.Value + 100
 		} else if len(mot) > 2 {
 			jeu.ViesRestantes -= 2
 			jeu.Message = ("Mot incorrect !")
@@ -81,6 +84,7 @@ func (jeu *Engine) GameHard(w http.ResponseWriter, r *http.Request) {
 	if jeu.ViesRestantes <= 0 {
 		http.Redirect(w, r, "/loose", http.StatusFound)
 	} else if strings.Join(jeu.LettresaTrouvées, "") == jeu.MotADeviner {
+		jeu.Score += jeu.Value + 100
 		http.Redirect(w, r, "/win", http.StatusFound)
 	}
 	// J'execute le template avec les données

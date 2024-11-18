@@ -1,0 +1,92 @@
+/* Réinitialisation des marges et du box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style général de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1C1C1C; /* Arrière-plan principal */
+    color: #E0E0E0; /* Texte principal */
+    display: flex;
+    flex-direction: column; /* Arrange les éléments en colonne */
+    align-items: center; /* Centre horizontalement */
+    justify-content: center; /* Centre verticalement */
+    min-height: 100vh;
+    gap: 20px; /* Espacement entre le titre et le conteneur */
+}
+
+/* Titre principal */
+h1 {
+    font-size: 6vw;
+    font-weight: bold;
+    color: #F57C00;
+    text-align: center;
+}
+
+/* Sous-titre principal */
+h2 {
+    font-size: 3.5vw;
+    font-weight: bold;
+    color: #E0E0E0; /* Texte principal */
+    text-align: center;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #333333; /* Ligne discrète pour structurer */
+    padding-bottom: 10px;
+}
+
+/* Sous-titre secondaire */
+h3 {
+    font-size: 2.5vw;
+    font-weight: normal;
+    color: #A3A3A3; /* Couleur secondaire */
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Paragraphe */
+p {
+    font-size: 1.5vw;
+    font-weight: bold;
+    color: #F57C00;
+    text-align: center;
+}
+
+/* Changement de couleur au survol */
+h1:hover {
+    color: #FFB347;
+}
+/* Conteneur principal */
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 600px; /* Largeur maximale du conteneur */
+    padding: 5vw; /* Padding fluide */
+    border-radius: 12px;
+    background-color: #2b2b2b; /* Fond du conteneur */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+    border: 1px solid #333333; /* Lignes et bordures */
+}
+
+
+/* Boutons */
+.button {
+    width: 100%;
+    padding: 2vw 0; /* Padding fluide pour une adaptation automatique */
+    font-size: 2vw; /* Taille de police ajustable */
+    font-weight: bold;
+    border: none;
+    border-radius: 1vw; /* Coins arrondis modulables */
+    background-color: #3A506B; /* Boutons interactifs */
+    color: #E0E0E0; /* Texte principal */
+    cursor: pointer;
+    margin: 10px 0;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.button:hover {
+    background-color: #F57C00; /* Couleur d'accentuation au survol */
+    transform: scale(1.05); /* Légère mise en avant du bouton au survol */
+}

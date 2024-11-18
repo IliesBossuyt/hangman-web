@@ -1,0 +1,112 @@
+/* Style général de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1C1C1C;
+    color: #E0E0E0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Wrapper principal pour agencer les éléments */
+.page-wrapper {
+    display: flex;
+    align-items: center; /* Centre verticalement les éléments */
+    gap: 20px; /* Espacement de base entre .vies-container et .container */
+}
+
+/* Titre principal */
+h1 {
+    font-size: 2.5vw;
+    font-weight: bold;
+    color: #F57C00;
+    text-align: center;
+}
+
+/* Sous-titre principal */
+h2 {
+    font-size: 3.5vw;
+    font-weight: bold;
+    color: #E0E0E0; /* Texte principal */
+    text-align: center;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #333333; /* Ligne discrète pour structurer */
+    padding-bottom: 10px;
+}
+
+/* Sous-titre secondaire */
+h3 {
+    font-size: 2.5vw;
+    font-weight: normal;
+    color: #A3A3A3; /* Couleur secondaire */
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Paragraphe */
+p {
+    font-size: 1.5vw;
+    font-weight: bold;
+    color: #F57C00;
+    text-align: center;
+}
+
+/* Changement de couleur au survol */
+h1:hover {
+    color: #FFB347;
+}
+
+/* Styles communs pour les conteneurs */
+.container, .vies-container, .back-container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #2b2b2b;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+    border: 1px solid #333333;
+}
+
+/* Conteneur principal */
+.container {
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Conteneur pour les vies */
+.vies-container {
+    width: 150px;
+    margin-left: 40px; /* Décalage supplémentaire vers la droite */
+}
+
+/* Conteneur de bas de page */
+.back-container {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 400px;
+    width: 90%;
+}
+
+/* Boutons */
+.button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.8vw;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background-color: #3A506B;
+    color: #E0E0E0;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.button:hover {
+    background-color: #F57C00;
+    transform: scale(1.05);
+}

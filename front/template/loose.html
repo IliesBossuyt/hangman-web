@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="/static/css/loose.css">
+</head>
+
+<body class="loose-page">
+
+    <h1>Dommage...</h1>
+    <h3>Vous avez perdu</h3>
+    <h2>Le mot était {{ .MotADeviner }}</h2>
+    <h3>Votre score : {{ .Score }}</h3>
+    <h4>Meilleur score : {{ .MeilleurScore }}</h4>
+    
+    <div class="container">
+
+        <form method="post">
+            <button class="button" name="button" value="Nouvellepartie">Nouvelle partie</button>
+        </form>
+
+        <form action="https://www.google.com/" method="get">
+            <button class="button" type="submit">Quitter</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"html/template"
@@ -7,7 +7,7 @@ import (
 
 func (jeu *Engine) Pause(w http.ResponseWriter, r *http.Request) {
 	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
-	tmpl := template.Must(template.ParseFiles("../html/pause.html"))
+	tmpl := template.Must(template.ParseFiles("front/template/pause.html"))
 
 	if r.Method == "POST" {
 		buttonValue := r.FormValue("button")

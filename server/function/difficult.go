@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"html/template"
@@ -7,7 +7,7 @@ import (
 
 func (jeu *Engine) Difficult(w http.ResponseWriter, r *http.Request) {
 	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier difficult.html
-	tmpl := template.Must(template.ParseFiles("../html/difficult.html"))
+	tmpl := template.Must(template.ParseFiles("front/template/difficult.html"))
 
 	// Je crée une variable qui définit ma structure
 	data := Engine{
@@ -18,6 +18,7 @@ func (jeu *Engine) Difficult(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		buttonValue := r.FormValue("button")
 		if buttonValue == "facile" {
+			jeu.Value = 250 / jeu.ViesRestantes
 			jeu.NouveauJeuFacile()
 			jeu.EtapePendu()
 			http.Redirect(w, r, "/gameeasy", http.StatusFound)
@@ -28,6 +29,7 @@ func (jeu *Engine) Difficult(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		buttonValue := r.FormValue("button")
 		if buttonValue == "difficile" {
+			jeu.Value = 500 / jeu.ViesRestantes
 			jeu.NouveauJeuDifficile()
 			jeu.EtapePendu()
 			http.Redirect(w, r, "/gamehard", http.StatusFound)

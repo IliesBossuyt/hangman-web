@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="/static/css/win.css">
+</head>
+
+<body class="win-page">
+
+    <h1>Bravo !</h1>
+    <h3>Vous avez gagnez avec {{ .ViesRestantes }} vies restantes</h3>
+    <h2>Le mot était {{ .MotADeviner }} </h2>
+    <h3>Votre score : {{ .Score }}</h3>
+    
+    
+    <div class="container">
+
+        <form method="post">
+            <button class="button" name="button" value="Nouvellepartie">Nouvelle partie</button>
+        </form>
+
+        <form action="https://www.google.com/" method="get">
+            <button class="button" type="submit">Quitter</button>
+        </form>
+    </div>
+</body>
+</html>
