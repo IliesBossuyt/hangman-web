@@ -1,62 +1,84 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Hangman</title>
     <link rel="stylesheet" href="/static/css/gameeasy.css">
 </head>
-<pre>
-	<h1>{{ .MotADeviner }}</h1>
-</pre>
-<h2>Il vous reste {{ .ViesRestantes }} vies</h2>
-<h3>Lettres déjà proposées : {{ .LettresProposées }}</h3>
-<h4>Mot propose : {{ .MotProposés }}</h4>
-<h5>{{ .Message }}</h5>
-<h6>Score : {{ .Score }}</h6>
-<form method="post">
-	<input type="text" id="mot" name="mot" autofocus placeholder="Entrez un mot">
-	<input type="submit" value="Envoyer">
-</form>
+<body>
+    <section class="gameeasy-page">
+        <!-- Zone de texte -->
+        <section class="zone-texte">
+			<pre>
+				<h1>{{ .MotADeviner }}</h1>
+			</pre>
+            <h2>{{ .ViesRestantes }} vies</h2>
+            <h5>{{ .Message }}</h5>
+			<h6>Score : {{ .Score }}</h6>
+            <form method="post">
+                <input type="text" id="mot" name="mot" autofocus placeholder="Entrez un mot">
+                <input type="submit" value="Envoyer">
+            </form>
 
-<div class="container">
-	<form method="post">
-		<button id="mot" name="mot" value="a">A</button>
-		<button id="mot" name="mot" value="z">Z</button>
-		<button id="mot" name="mot" value="e">E</button>
-		<button id="mot" name="mot" value="r">R</button>
-		<button id="mot" name="mot" value="t">T</button>
-		<button id="mot" name="mot" value="y">Y</button>
-		<button id="mot" name="mot" value="u">U</button>
-		<button id="mot" name="mot" value="i">I</button>
-		<button id="mot" name="mot" value="o">O</button>
-		<button id="mot" name="mot" value="p">P</button>
-		<button id="mot" name="mot" value="q">Q</button>
-		<button id="mot" name="mot" value="s">S</button>
-		<button id="mot" name="mot" value="d">D</button>
-		<button id="mot" name="mot" value="f">F</button>
-		<button id="mot" name="mot" value="g">G</button>
-		<button id="mot" name="mot" value="h">H</button>
-		<button id="mot" name="mot" value="j">J</button>
-		<button id="mot" name="mot" value="k">K</button>
-		<button id="mot" name="mot" value="l">L</button>
-		<button id="mot" name="mot" value="m">M</button>
-		<button id="mot" name="mot" value="w">W</button>
-		<button id="mot" name="mot" value="x">X</button>
-		<button id="mot" name="mot" value="c">C</button>
-		<button id="mot" name="mot" value="v">V</button>
-		<button id="mot" name="mot" value="b">B</button>
-		<button id="mot" name="mot" value="n">N</button>
-	</form>
-</div>
-<div class="pendu-container">
-	<img src="{{ .EtapesPendu }}">
-</div>
-<div class="Pause-container">
-	<form action="/pause" method="get">
-		<button class="button" type="submit">Pause</button>
-	</form>
-</div>
-	
-<script>
-console.log(jeu.MotADeviner);
-</script>
+            <!-- Clavier virtuel -->
+            <div class="keyboard">
+                <form method="post">
+
+                 <!-- Ligne 1 -->
+                    <div class="keyboard-ligne">
+                        <button id="mot" name="mot" value="a">A</button>
+                        <button name="mot" value="z">Z</button>
+                        <button name="mot" value="e">E</button>
+                        <button name="mot" value="r">R</button>
+                        <button name="mot" value="t">T</button>
+                        <button name="mot" value="y">Y</button>
+                        <button name="mot" value="u">U</button>
+                        <button name="mot" value="i">I</button>
+                        <button name="mot" value="o">O</button>
+                        <button name="mot" value="p">P</button>
+            
+                    </div>
+                        <!-- Ligne 2 -->
+                    <div class="keyboard-ligne">
+                        <button name="mot" value="q">Q</button>
+                        <button name="mot" value="s">S</button>
+                        <button name="mot" value="d">D</button>
+                        <button name="mot" value="f">F</button>
+                        <button name="mot" value="g">G</button>
+                        <button name="mot" value="h">H</button>
+                        <button name="mot" value="j">J</button>
+                        <button name="mot" value="k">K</button>
+                        <button name="mot" value="l">L</button>
+                        <button name="mot" value="m">M</button>
+                    </div>
+                        <!-- Ligne 3 -->
+                    <div class="keyboard-ligne">
+                        <button name="mot" value="w">W</button>
+                        <button name="mot" value="x">X</button>
+                        <button name="mot" value="c">C</button>
+                        <button name="mot" value="v">V</button>
+                        <button name="mot" value="b">B</button>
+                        <button name="mot" value="n">N</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Zone pendu -->
+        <section class="zone-image" method="post">
+            <div class="pendu-container" method="post">
+					<h4>{{ .LettresProposées }}</h4>
+                    <h4>{{ .MotProposés }}</h4>
+                </div method="post">
+                <img src="{{ .EtapesPendu }}" alt="Image du pendu">
+            </div>
+        </section>
+
+
+        <section class="zone-pause"> 
+            	<form action="/pause" method="get">
+                	<button class="button" type="submit">Pause</button>
+            	</form>
+        </section>
+</body>
+</html>

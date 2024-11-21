@@ -1,102 +1,205 @@
 /* Réinitialisation des marges et du box-sizing */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0; /* Supprime les marges par défaut de tous les éléments */
+    padding: 0; /* Supprime le padding par défaut de tous les éléments */
+    box-sizing: border-box; /* Définit le modèle de boîte pour inclure les bordures et le padding dans les dimensions */
 }
+
+/* Importation de la police 'Roboto' */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); /* Importe les poids 400 (normal) et 700 (gras) de la police Roboto */
 
 /* Style général de la page */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #1C1C1C; /* Arrière-plan principal */
-    color: #E0E0E0; /* Texte principal */
-    display: flex;
-    flex-direction: column; /* Arrange les éléments en colonne */
-    align-items: center; /* Centre horizontalement */
-    justify-content: center; /* Centre verticalement */
-    min-height: 100vh;
-    gap: 20px; /* Espacement entre le titre et le conteneur */
+    font-family: 'Roboto', Arial, sans-serif; /* Définit la police principale du site */
+    background-color: #1C1C1C; /* Arrière-plan sombre */
+    color: #E0E0E0; /* Texte clair */
+    display: flex; /* Utilise Flexbox pour le layout */
+    align-items: center; /* Centre les éléments verticalement */
+    justify-content: center; /* Centre les éléments horizontalement */
+    min-height: 100vh; /* Hauteur minimale égale à la hauteur de la fenêtre */
 }
 
-/* Titre principal */
+/* Conteneur principal pour le jeu */
+.gameeasy-page {
+    width: 95%; /* Le conteneur occupe 95% de la largeur du parent */
+    background-color: #2B2B2B; /* Fond sombre du conteneur */
+    border-radius: 12px; /* Coins arrondis */
+    padding: 20px; /* Espacement interne */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7); /* Ombre portée autour du conteneur */
+    display: grid; /* Utilise la grille CSS */
+    grid-template-columns: 1fr 1fr; /* Deux colonnes de taille égale */
+    grid-template-rows: auto auto; /* Deux lignes dont la hauteur s'ajuste automatiquement */
+    gap: 10px; /* Espacement entre les éléments de la grille */
+}
+
+/* Zone de texte */
+.zone-texte {
+    background-color: #333333; /* Fond légèrement plus clair */
+    border-radius: 12px; /* Coins arrondis */
+    padding: 10px; /* Espacement interne */
+    display: flex; /* Utilise Flexbox */
+    flex-direction: column; /* Aligne les éléments verticalement */
+    gap:60px; /* Espace de 80px entre les éléments enfants */
+    justify-content: space-between; /* Espace les éléments pour remplir tout l'espace vertical */
+    text-align: center; /* Centre le texte horizontalement */
+    grid-column: 1; /* Place l'élément dans la première colonne de la grille */
+    grid-row: 1; /* Place l'élément dans la première ligne de la grille */
+}
+
+/* Titres dans la zone de texte */
 h1 {
-    font-size: 6vw;
-    font-weight: bold;
-    color: #F57C00;
-    text-align: center;
+    font-size: 2em; /* Taille de police du titre principal */
+    font-weight: bold; /* Texte en gras */
+    color: #F57C00; /* Couleur orange vif pour le titre */
+    border-bottom: 2px solid #444444; /* Ligne sous le titre pour le style */
+    padding-bottom: 10px; /* Espace sous le titre */
 }
 
-/* Sous-titre principal */
-h2 {
-    font-size: 3.5vw;
-    font-weight: bold;
-    color: #E0E0E0; /* Texte principal */
-    text-align: center;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #333333; /* Ligne discrète pour structurer */
-    padding-bottom: 10px;
+h2,
+h4,
+h5 {
+    font-size: 1.2em; /* Taille de police pour les sous-titres */
+    color: #A3A3A3; /* Couleur grise pour le texte secondaire */
 }
 
-/* Sous-titre secondaire */
-h3 {
-    font-size: 2.5vw;
-    font-weight: normal;
-    color: #A3A3A3; /* Couleur secondaire */
-    text-align: center;
-    margin-bottom: 15px;
+/* Formulaire dans la zone de texte */
+.zone-texte form {
+    display: flex; /* Utilise Flexbox pour le formulaire */
+    flex-direction: column; /* Aligne les éléments verticalement */
+    gap: 15px; /* Espacement entre les éléments du formulaire */
 }
 
-/* Paragraphe */
-p {
-    font-size: 1.5vw;
-    font-weight: bold;
-    color: #F57C00;
-    text-align: center;
+.zone-texte input[type="text"] {
+    width: 100%; /* Champ de texte prend toute la largeur disponible */
+    padding: 12px; /* Espacement interne pour le confort de saisie */
+    border-radius: 5px; /* Coins arrondis */
+    border: 1px solid #444444; /* Bordure grise foncée */
+    background-color: #222222; /* Fond sombre pour le champ de texte */
+    color: #E0E0E0; /* Texte clair à l'intérieur du champ */
+    font-size: 16px; /* Taille de police standard */
 }
 
-/* Changement de couleur au survol */
-h1:hover {
-    color: #FFB347;
-}
-/* Conteneur principal */
-.container {
-    text-align: center;
-    width: 90%;
-    max-width: 600px; /* Largeur maximale du conteneur */
-    padding: 5vw; /* Padding fluide */
-    border-radius: 12px;
-    background-color: #2b2b2b; /* Fond du conteneur */
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-    border: 1px solid #333333; /* Lignes et bordures */
+.zone-texte input[type="submit"] {
+    background-color: #3A506B; /* Couleur bleue du bouton */
+    color: #E0E0E0; /* Texte clair */
+    padding: 12px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Change le curseur en main au survol */
+    font-weight: bold; /* Texte en gras */
+    transition: background-color 0.3s; /* Transition pour l'effet au survol */
 }
 
-.Pause-container {
-    text-align: center;
-    width: 90%;
-    max-width: 600px; /* Largeur maximale du conteneur */
-    padding: 5vw; /* Padding fluide */
-    border-radius: 12px;
-    background-color: #2b2b2b; /* Fond du conteneur */
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-    border: 1px solid #333333; /* Lignes et bordures */
+.zone-texte input[type="submit"]:hover {
+    background-color: #F57C00; /* Change la couleur du bouton au survol */
 }
 
-/* Boutons */
+/* Clavier virtuel */
+.keyboard {
+    display: flex; /* Utilise Flexbox */
+    flex-direction: column; /* Aligne les lignes du clavier verticalement */
+    gap: 15px; /* Espacement entre les lignes du clavier */
+}
+
+.keyboard-ligne {
+    display: flex; /* Utilise Flexbox pour les touches */
+    justify-content: center; /* Centre les touches horizontalement */
+    gap: 5px; /* Espacement entre les touches */
+}
+
+.keyboard-ligne button {
+    background-color: #444444; /* Fond gris foncé pour les touches */
+    color: #E0E0E0; /* Texte clair sur les touches */
+    border: 1px solid #333333; /* Bordure discrète */
+    border-radius: 5px; /* Coins arrondis */
+    padding: 17px; /* Espacement interne généreux pour les touches */
+    cursor: pointer; /* Change le curseur en main au survol */
+    font-weight: bold; /* Texte en gras */
+    font-size: 14px; /* Taille de police standard */
+    transition: background-color 0.3s; /* Transition pour l'effet au survol */
+}
+
+.keyboard-ligne button:hover {
+    background-color: #555555; /* Éclaircit le fond au survol */
+}
+
+/* Zone pendu */
+.zone-image {
+    background-color: #333333; /* Fond légèrement plus clair */
+    border-radius: 12px; /* Coins arrondis */
+    padding: 20px; /* Espacement interne */
+    display: flex; /* Utilise Flexbox */
+    flex-direction: column; /* Aligne les éléments verticalement */
+    align-items: center; /* Centre les éléments horizontalement */
+    gap: 30px; /* Espacement entre les éléments */
+    grid-column: 2; /* Place la zone dans la deuxième colonne de la grille */
+    grid-row: 1; /* Place la zone dans la première ligne de la grille */
+}
+
+.zone-image img {
+    max-width: 100%; /* L'image ne dépasse pas la largeur du conteneur */
+    border-radius: 10px; /* Coins arrondis de l'image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre portée pour l'image */
+}
+
+.proposées-container {
+    background-color: #2B2B2B; /* Fond sombre pour le conteneur */
+    padding: 15px; /* Espacement interne */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 16px; /* Taille de police */
+    text-align: center; /* Centre le texte */
+    width: 100%; /* Le conteneur prend toute la largeur disponible */
+    border: 1px solid #444444; /* Bordure grise foncée */
+    color: #F57C00; /* Texte clair */
+    
+    
+}
+
+/* Zone de pause */
+.zone-pause {
+    width: 50%; /* Occupe toute la largeur disponible */
+    padding: 10px; /* Espacement interne */
+    background-color: #333333; /* Fond légèrement plus clair */
+    color: #E0E0E0; /* Texte clair */
+    text-align: center; /* Centre le texte horizontalement */
+    border-radius: 12px; /* Coins arrondis */
+    ;
+
+}
+
+.pause-container button {
+    background-color: #444444; /* Fond du bouton pause */
+    color: #E0E0E0; /* Texte clair du bouton */
+    padding: 15px 40px; /* Espacement interne horizontal et vertical */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Change le curseur en main au survol */
+    font-size: 18px; /* Taille de police du bouton */
+    font-weight: bold; /* Texte en gras */
+    transition: background-color 0.3s; /* Transition pour l'effet au survol */
+}
+
+/* Ajout de l'effet de survol pour le bouton de pause pour cohérence */
+.pause-container button:hover {
+    background-color: #555555; /* Change la couleur du bouton au survol */
+}
+
+/* Boutons génériques */
 .button {
-    width: 100%;
-    padding: 2vw 0; /* Padding fluide pour une adaptation automatique */
-    font-size: 2vw; /* Taille de police ajustable */
-    font-weight: bold;
-    border: none;
+    width: 100%; /* Le bouton prend toute la largeur disponible */
+    padding: 1vw 0; /* Espacement vertical fluide */
+    font-size: 1.7vw; /* Taille de police relative à la largeur de la fenêtre */
+    font-weight: bold; /* Texte en gras */
+    border: none; /* Pas de bordure */
     border-radius: 1vw; /* Coins arrondis modulables */
-    background-color: #3A506B; /* Boutons interactifs */
-    color: #E0E0E0; /* Texte principal */
-    cursor: pointer;
-    margin: 10px 0;
-    transition: background-color 0.3s ease, transform 0.2s;
+    background-color: #3A506B; /* Fond bleu pour le bouton */
+    color: #E0E0E0; /* Texte clair */
+    cursor: pointer; /* Change le curseur en main au survol */
+    margin: 10px 0; /* Marge verticale */
+    transition: background-color 0.3s ease, transform 0.2s; /* Transitions pour les effets au survol */
 }
 
 .button:hover {
-    background-color: #F57C00; /* Couleur d'accentuation au survol */
-    transform: scale(1.05); /* Légère mise en avant du bouton au survol */
+    background-color: #F57C00; /* Change la couleur du bouton au survol */
+    transform: scale(1.05); /* Légère mise en avant du bouton */
 }

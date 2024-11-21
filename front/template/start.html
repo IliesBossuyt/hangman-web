@@ -5,7 +5,7 @@
     <title>Hangman</title>
     <link rel="stylesheet" href="/static/css/start.css">
 </head>
-<body class="home-page">
+<body class="start-page">
 
     <h1>Jeu du Pendu</h1>
     
@@ -19,10 +19,17 @@
         <form action="/credit" method="post">
             <button class="button" name="button" value="credits">Crédits</button>
         </form>
+    </div>
 
-		<form method="post">
-			<button class="button" name="button" value="sons">Sons</button>
-		</form>
-	</div>
+
+    <div class="sons-container">
+        <form method="post">
+            <button class="sons-button" name="button" value="son">
+                <img src="/static/img/IMG_0433.PNG" 
+                alt="son">
+                
+            </button>
+        </form>
+    </div>
 </body>
 </html>
