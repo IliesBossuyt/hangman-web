@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="/static/css/pause.css">
+    <script src="/static/js/script.js"></script>
+</head>
+
+<body class="Pause-page">
+
+    <h1>Pause</h1>
+    
+    <div class="container">
+
+        <form method="post">
+            <button class="button" name="button" value="Reprendre" onclick="history.back()">Reprendre</button>
+        </form>
+    
+        <form method="post">
+            <button class="button" name="button" value="Nouvellepartie">Nouvelle partie</button>
+        </form>
+
+		<form action="https://www.google.com/" method="get">
+            <button class="button" type="submit">Quitter</button>
+        </form>  
+	</div>
+    <div class="sons-container">
+        <img src="/static/img/IMG_0433.PNG" alt="son">
+            <h1>sons</h1>
+            <div id="audio-control">
+            <button id="mute-toggle">🔊</button>
+            </div>
+</div>
+</body>
+</html>

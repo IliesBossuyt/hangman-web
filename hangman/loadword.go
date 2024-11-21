@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"bufio"
@@ -8,7 +8,11 @@ import (
 
 // Fonction pour charger les mots depuis le fichier "words.txt"
 func ChargerMotsDepuisFichier() []string {
+<<<<<<< Updated upstream:Hangman/loadword.go
 	fichier, _ := os.Open("words.txt")
+=======
+	fichier, _ := os.Open("server/wordlist/words.txt")
+>>>>>>> Stashed changes:server/function/loadword.go
 
 	defer fichier.Close()
 
@@ -27,7 +31,11 @@ func ChargerMotsDepuisFichier() []string {
 }
 
 func ChargerMotsDepuisFichierHard() []string {
+<<<<<<< Updated upstream:Hangman/loadword.go
 	fichier, _ := os.Open("wordshard.txt")
+=======
+	fichier, _ := os.Open("server/wordlist/wordshard.txt")
+>>>>>>> Stashed changes:server/function/loadword.go
 
 	defer fichier.Close()
 

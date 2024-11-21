@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="/static/css/start.css">
+    <script src="/static/js/script.js"></script>
+</head>
+<body class="start-page">
+
+    <h1>Jeu du Pendu</h1>
+    
+    <div class="container">
+        <!-- Formulaire pour commencer le jeu -->
+        <form action="/difficult" method="post">
+            <button class="button"name="button" value="jouer">Jouer</button>
+        </form>
+        
+        <!-- Formulaire pour afficher les crédits -->
+        <form action="/credit" method="post">
+            <button class="button" name="button" value="credit">Crédit</button>
+        </form>
+    </div>
+
+
+    <div class="sons-container">
+        <form action="" method="get">
+            <img src="/static/img/IMG_0433.PNG" alt="son">
+                <h1>sons</h1>
+                <div id="audio-control">
+                <button id="mute-toggle">
+                    <i id="mute-icon" class="fas fa-volume-up"></i>
+                    
+                </button>
+                </div>
+        </form>
+        </div>
+        
+   
+</body>
+</html>
