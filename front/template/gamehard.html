@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+    <title>Hangman</title>
+    <link rel="stylesheet" href="/front/static/css/gameeasy.css">
+</head>
+<h1>{{ .MotADeviner }}</h1>
+<h2>Il vous reste {{ .ViesRestantes }} vies</h2>
+<h3>Lettres déjà proposées : {{ .LettresProposées }}</h3>
+<h4>Mot propose : {{ .MotProposés }}</h4>
+<h5>{{ .Message }}</h5>
+<form method="post">
+	<input type="text" id="mot" name="mot" placeholder="Entrez un mot">
+	<input type="submit" value="Envoyer">
+</form>
+
+<div class="container">
+	<form method="post">
+		<button id="mot" name="mot" value="a">A</button>
+		<button id="mot" name="mot" value="z">Z</button>
+		<button id="mot" name="mot" value="e">E</button>
+		<button id="mot" name="mot" value="r">R</button>
+		<button id="mot" name="mot" value="t">T</button>
+		<button id="mot" name="mot" value="y">Y</button>
+		<button id="mot" name="mot" value="u">U</button>
+		<button id="mot" name="mot" value="i">I</button>
+		<button id="mot" name="mot" value="o">O</button>
+		<button id="mot" name="mot" value="p">P</button>
+		<button id="mot" name="mot" value="q">Q</button>
+		<button id="mot" name="mot" value="s">S</button>
+		<button id="mot" name="mot" value="d">D</button>
+		<button id="mot" name="mot" value="f">F</button>
+		<button id="mot" name="mot" value="g">G</button>
+		<button id="mot" name="mot" value="h">H</button>
+		<button id="mot" name="mot" value="j">J</button>
+		<button id="mot" name="mot" value="k">K</button>
+		<button id="mot" name="mot" value="l">L</button>
+		<button id="mot" name="mot" value="m">M</button>
+		<button id="mot" name="mot" value="w">W</button>
+		<button id="mot" name="mot" value="x">X</button>
+		<button id="mot" name="mot" value="c">C</button>
+		<button id="mot" name="mot" value="v">V</button>
+		<button id="mot" name="mot" value="b">B</button>
+		<button id="mot" name="mot" value="n">N</button>
+	</form>
+</div>
+<div class="pendu-container">
+	<img src="{{ .EtapesPendu }}">
+</div>
+<div class="Pause-container">
+	<form action="/pause" method="get">
+		<button class="button" type="submit">Pause</button>
+	</form>
+</div>
+	

@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"bufio"
@@ -8,7 +8,7 @@ import (
 
 // Fonction pour charger les mots depuis le fichier "words.txt"
 func ChargerMotsDepuisFichier() []string {
-	fichier, _ := os.Open("../wordlist/words.txt")
+	fichier, _ := os.Open("server/wordlist/words.txt")
 
 	defer fichier.Close()
 
@@ -27,7 +27,7 @@ func ChargerMotsDepuisFichier() []string {
 }
 
 func ChargerMotsDepuisFichierHard() []string {
-	fichier, _ := os.Open("../wordlist/wordshard.txt")
+	fichier, _ := os.Open("server/wordlist/wordshard.txt")
 
 	defer fichier.Close()
 

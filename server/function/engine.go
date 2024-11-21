@@ -1,4 +1,4 @@
-package main
+package engine
 
 // Je crée ma structure
 type Engine struct {
@@ -11,5 +11,3 @@ type Engine struct {
 	Message          string
 	Musique          bool
 }
-
-var jeu Engine

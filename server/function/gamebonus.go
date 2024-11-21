@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"html/template"
@@ -8,7 +8,7 @@ import (
 
 func (jeu *Engine) GameBonus(w http.ResponseWriter, r *http.Request) {
 	// J'utilise la librairie tmpl pour créer un template qui va chercher mon fichier index.html
-	tmpl := template.Must(template.ParseFiles("../html/gamebonus.html"))
+	tmpl := template.Must(template.ParseFiles("front/template/gamebonus.html"))
 
 	// Je crée une variable qui définit ma structure
 	data := Engine{

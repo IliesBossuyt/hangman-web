@@ -1,10 +1,8 @@
-package main
+package engine
 
-import (
-	"net/http"
-)
+import "net/http"
 
-func main() {
+func Run(jeu *Engine) {
 	http.HandleFunc("/", jeu.Handler) // Ici, quand on arrive sur la racine, on appelle la fonction Handler
 	http.HandleFunc("/difficult", jeu.Difficult)
 	http.HandleFunc("/gameeasy", jeu.GameEasy)
@@ -15,7 +13,7 @@ func main() {
 	http.HandleFunc("/loose", jeu.Loose)
 	http.HandleFunc("/gamebonus", jeu.GameBonus)
 
-	fs := http.FileServer(http.Dir("./static"))
+	fs := http.FileServer(http.Dir("front/./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/hangman", jeu.Handler) // Ici, on redirige vers /hangman pour effectuer les fonctions POST
 	http.ListenAndServe(":8080", nil)
