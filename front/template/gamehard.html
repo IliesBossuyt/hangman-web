@@ -6,14 +6,16 @@
     <link rel="stylesheet" href="/static/css/gameeasy
 	.css">
 </head>
-<h1>{{ .MotADeviner }}</h1>
+<pre>
+	<h1>{{ .MotADeviner }}</h1>
+</pre>
 <h2>Il vous reste {{ .ViesRestantes }} vies</h2>
 <h3>Lettres déjà proposées : {{ .LettresProposées }}</h3>
 <h4>Mot propose : {{ .MotProposés }}</h4>
 <h5>{{ .Message }}</h5>
 <h6>Score : {{ .Score }}</h6>
 <form method="post">
-	<input type="text" id="mot" name="mot" placeholder="Entrez un mot">
+	<input type="text" id="mot" name="mot" autofocus placeholder="Entrez un mot">
 	<input type="submit" value="Envoyer">
 </form>
 

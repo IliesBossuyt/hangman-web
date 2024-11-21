@@ -22,19 +22,21 @@ func (jeu *Engine) NouveauJeuFacile() {
 	motSansAccents := enleverAccents(motSansMajuscules)
 
 	jeu.MotADeviner = motSansAccents
-	jeu.LettresaTrouvées = make([]string, len(motSansAccents))
+	jeu.LettresaTrouvées = make([]string, 0)
+	for _, r := range jeu.MotADeviner {
+		jeu.LettresaTrouvées = append(jeu.LettresaTrouvées, string(r))
+	}
 	jeu.LettresProposées = []string{}
 	jeu.MotProposés = []string{}
 
 	// Initialise les lettres à trouvées à "_"
-	for i := range jeu.LettresaTrouvées {
+	for i := 0; i < len(jeu.LettresaTrouvées); i++ {
 		if jeu.LettresaTrouvées[i] == " " {
 			jeu.LettresaTrouvées[i] = " "
 		} else {
 			jeu.LettresaTrouvées[i] = "_"
 		}
 	}
-
 }
 
 // Fonction pour créer le jeu en mode difficile
@@ -53,12 +55,15 @@ func (jeu *Engine) NouveauJeuDifficile() {
 	motSansAccents := enleverAccents(motSansMajuscules)
 
 	jeu.MotADeviner = motSansAccents
-	jeu.LettresaTrouvées = make([]string, len(motSansAccents))
+	jeu.LettresaTrouvées = make([]string, 0)
+	for _, r := range jeu.MotADeviner {
+		jeu.LettresaTrouvées = append(jeu.LettresaTrouvées, string(r))
+	}
 	jeu.LettresProposées = []string{}
 	jeu.MotProposés = []string{}
 
 	// Initialise les lettres à trouvées à "_"
-	for i := range jeu.LettresaTrouvées {
+	for i := 0; i < len(jeu.LettresaTrouvées); i++ {
 		if jeu.LettresaTrouvées[i] == " " {
 			jeu.LettresaTrouvées[i] = " "
 		} else {
@@ -82,12 +87,15 @@ func (jeu *Engine) NouveauJeuBonus() {
 	motSansAccents := enleverAccents(motSansMajuscules)
 
 	jeu.MotADeviner = motSansAccents
-	jeu.LettresaTrouvées = make([]string, len(motSansAccents))
+	jeu.LettresaTrouvées = make([]string, 0)
+	for _, r := range jeu.MotADeviner {
+		jeu.LettresaTrouvées = append(jeu.LettresaTrouvées, string(r))
+	}
 	jeu.LettresProposées = []string{}
 	jeu.MotProposés = []string{}
 
 	// Initialise les lettres à trouvées à "_"
-	for i := range jeu.LettresaTrouvées {
+	for i := 0; i < len(jeu.LettresaTrouvées); i++ {
 		if jeu.LettresaTrouvées[i] == " " {
 			jeu.LettresaTrouvées[i] = " "
 		} else {
