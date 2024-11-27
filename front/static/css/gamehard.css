@@ -1,126 +1,198 @@
 /* Réinitialisation des marges et du box-sizing */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0; /* Supprime les marges par défaut de tous les éléments */
+    padding: 0; /* Supprime le padding par défaut de tous les éléments */
+    box-sizing: border-box; /* Définit le modèle de boîte pour inclure les bordures et le padding dans les dimensions */
 }
 
-/* Style général du corps */
+/* Style général de la page */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #1C1C1C;
-    color: #E0E0E0;
+    font-family: Arial, sans-serif; /* Définit la police principale du site */
+    display: flex; /* Utilise Flexbox pour le layout */
+    align-items: center; /* Centre les éléments verticalement */
+    justify-content: center; /* Centre les éléments horizontalement */
+    min-height: 100vh; /* Hauteur minimale égale à la hauteur de la fenêtre */
+   
+}
+
+/* Conteneur principal pour le jeu */
+.gameeasy-page {
+    width: 100%; /* Le conteneur occupe 95% de la largeur du parent */
+    border-radius: 1vw; /* Coins arrondis */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    flex-direction: row;
+    padding: 1vw; /* Espacement interne */
+    gap: 1vw; /* Espacement entre les éléments de la grille */
 }
 
-/* Conteneur principal du jeu */
-.game-container {
-    text-align: center;
-    padding: 20px;
-    background-color: #2b2b2b;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-    border: 1px solid #333333;
-    width: 320px;
+/* Zone de texte */
+.zone-texte {
+
+    background-color: #333333; /* Fond légèrement plus clair */
+    border-radius: 1vw; /* Coins arrondis */
+    padding: 3vw; /* Espacement interne */
+    flex: 1; /* Occupe toute la largeur disponible */
+    flex-direction: column; /* Aligne les éléments verticalement */
+    text-align: center; /* Centre le texte horizontalement */
 }
 
-/* Styles des titres */
+/* Titres dans la zone de texte */
 h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #F57C00;
-    margin-bottom: 10px;
+    font-size: 4vw; /* Taille de police du titre principal */
+    font-weight: bold; /* Texte en gras */
+    color: #F57C00; /* Couleur orange vif pour le titre */
+    border-bottom: 2px solid #444444; /* Ligne sous le titre pour le style */
+     /* Espace sous le titre */
+    padding: 1vw;
 }
 
-h2, h3, h4, h5 {
-    font-size: 16px;
+h2{
+    font-size: 2vw; /* Taille de police pour les sous-titres */
+    color: #A3A3A3; 
+    text-align: center;
+    padding: 1vw;
+}
+
+h3 {   
+    font-size: 1vw; /* Taille de police pour les sous-titres */
+    color: #f57b00cb; 
+    text-align: center;
+    padding: 1vw;
+}
+
+h4 {   
+    font-size: 1vw; /* Taille de police pour les sous-titres */
     color: #A3A3A3;
-    margin-bottom: 10px;
+    text-align: center;
+    padding: 3vw;
 }
 
-/* Formulaire pour entrer un mot */
-.word-form {
-    margin-bottom: 20px;
+
+
+.zone-texte input[type="text"] {
+    width: 75%; /* Champ de texte prend toute la largeur disponible */
+    padding: 1vw ; /* Espacement interne pour le confort de saisie */
+    border-radius: 1vw; /* Coins arrondis */
+    border: 1px solid #444444; /* Bordure grise foncée */
+    background-color: #222222; /* Fond sombre pour le champ de texte */
+    color: #E0E0E0; /* Texte clair à l'intérieur du champ */
+    font-size: 1vw; 
+    margin-bottom: 1vw;
+
 }
 
-.word-form input[type="text"] {
-    padding: 8px;
-    width: 70%;
-    border: 1px solid #333333;
-    border-radius: 5px;
-    margin-right: 5px;
-    background-color: #3A506B;
-    color: #E0E0E0;
+.zone-texte input[type="submit"] {
+    width: 25%; /* Le bouton prend toute la largeur disponible */
+    padding: 1vw; /* Espacement vertical fluide */
+    font-size: 1.2vw; /* Taille de police relative à la largeur de la fenêtre */
+    font-weight: bold; /* Texte en gras */
+    border: none; /* Pas de bordure */
+    border-radius: 1vw; /* Coins arrondis modulables */
+    background-color: #3A506B; /* Fond bleu pour le bouton */
+    color: #E0E0E0; /* Texte clair */
+    cursor: pointer; /* Change le curseur en main au survol */
+    transition: background-color 0.3s ease, transform 0.2s; 
 }
 
-.word-form input[type="submit"] {
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    background-color: #F57C00;
-    color: #E0E0E0;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.zone-texte input[type="submit"]:hover {
+    background-color: #F57C00; /* Change la couleur du bouton au survol */
 }
 
-.word-form input[type="submit"]:hover {
-    background-color: #3A506B;
-}
-
-/* Conteneur des lettres */
-.letters-container {
+/* Clavier virtuel */
+.keyboard {
+    padding: 1vw;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 5px;
-    margin-bottom: 20px;
-}
+    flex-direction: column;
+    gap: 0.5vw;
+  }
 
-.letters-container button {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    background-color: #3A506B;
-    color: #E0E0E0;
+.keyboard-ligne {
+        display: flex;
+        justify-content: space-around; /* Espaces égaux autour des boutons */
+        gap: 0.5vw; /* Contrôle l'espacement entre les boutons */
+    }
+    
+
+
+.keyboard-ligne button {
+    flex: 1; /* Chaque bouton prend un espace égal dans la ligne */
+    aspect-ratio: 1 / 1; /* Les boutons restent carrés */
+    font-size: 1.5vw; /* Taille de la police relative à la largeur de l'écran */
+    padding: 0.5vw;
+    background-color: lightgray;
+    border: 2px solid #ccc;
+    border-radius: 0.5vw; /* Coins arrondis modulables */
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease-in-out; /* Animation fluide */
+    
 }
 
-.letters-container button:hover {
-    background-color: #F57C00;
+/* Boutons vides */
+.keyboard-ligne .empty {
+    visibility: hidden; /* Cache le bouton */
+    border: none; /* Supprime la bordure */
+    background-color: transparent; /* Fond transparent */
+  }
+
+.keyboard-ligne button:hover {
+    background-color: #555555; /* Éclaircit le fond au survol */
 }
 
-/* Bouton Pause */
-.pause-form button {
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #E0E0E0;
-    background-color: #3A506B;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/* Zone pendu */
+.zone-image {
+    background-color: #333333; /* Fond légèrement plus clair */
+    border-radius: 1vw; /* Coins arrondis */
+    padding: 2vw; /* Espacement interne */
+     /* Occupe toute la largeur disponible */
+    flex-direction: column; /* Aligne les éléments verticalement */
+    flex: 1; 
+    align-items: center; /* Centre les éléments horizontalement */
+    gap: 3vw; /* Espacegrid-row: 1; /* Place la zone dans la première ligne de la grille */
 }
 
-.pause-form button:hover {
-    background-color: #F57C00;
+.zone-image img {
+    max-width: 100%; /* L'image ne dépasse pas la largeur du conteneur */
+    border-radius: 2vw; /* Coins arrondis de l'image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre portée pour l'image */
 }
 
-/* Image du pendu */
-.hangman-image {
-    margin-top: 20px;
-    max-width: 100%;
-    height: auto;
+
+/* Zone de pause */
+.zone-pause {
+    width: 100%; /* Occupe toute la largeur disponible */
+    padding: 0.1vw; /* Espacement interne */
+    background-color: #333333; /* Fond légèrement plus clair */
+    color: #E0E0E0; /* Texte clair */
+    text-align: center; /* Centre le texte horizontalement */
+    border-radius: 1vw; /* Coins arrondis */
+    gap: 1vw; /* Espacement entre les éléments de la grille */
+    display: flex;
+    flex-direction: column;
+
+
 }
 
-/* Audio player styling (if visible) */
-audio {
-    display: none; /* Cacher le lecteur audio pour un design épuré */
+
+/* Ajout de l'effet de survol pour le bouton de pause pour cohérence */
+.pause-container button:hover {
+    background-color: #555555; /* Change la couleur du bouton au survol */
+}
+
+/* Boutons génériques */
+.button {
+    width: 15%; /* Le bouton prend toute la largeur disponible */
+    padding: 1vw; /* Espacement vertical fluide */
+    font-size: 1vw; /* Taille de police relative à la largeur de la fenêtre */
+    border: none; /* Pas de bordure */
+    border-radius: 1vw; /* Coins arrondis modulables */
+    background-color: #3A506B; /* Fond bleu pour le bouton */
+    color: #E0E0E0; /* Texte clair */
+    cursor: pointer; /* Change le curseur en main au survol */
+    margin: 0.5vw; /* Marge verticale */
+    transition: background-color 0.3s ease, transform 0.2s; /* Transitions pour les effets au survol */
+}
+
+.button:hover {
+    background-color: #F57C00; /* Change la couleur du bouton au survol */
+    transform: scale(1.05); /* Légère mise en avant du bouton */
 }
