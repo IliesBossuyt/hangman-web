@@ -90,3 +90,16 @@ h1:hover {
     background-color: #F57C00; /* Couleur d'accentuation au survol */
     transform: scale(1.05); /* Légère mise en avant du bouton au survol */
 }
+
+
+.Score {
+    display: flex;
+    flex-direction: column;
+    font-size: 2.5vw;
+    font-weight: bold;
+    color: #F57C00;
+    text-align: center;
+    border: 1px solid #E0E0E0;
+    padding: 2vw;
+    border-radius: 5px;
+}
