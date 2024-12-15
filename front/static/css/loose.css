@@ -99,7 +99,14 @@ h1:hover {
     font-weight: bold;
     color: #F57C00;
     text-align: center;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #F57C00;
     padding: 2vw;
     border-radius: 5px;
+    height: 50%;
+}
+
+.container-score {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }

@@ -25,7 +25,7 @@ h1 {
     font-weight: bold;
     color: #F57C00;
     text-align: center;
-    margin-top: 70px;
+    margin-top: -100px;
 }
 
 /* Sous-titre principal */
@@ -50,9 +50,9 @@ h3 {
 
 /* Paragraphe */
 p {
-    font-size: 5vw;
+    font-size: 4vw;
     font-weight: bold;
-    color: #F57C00;
+    color: #ffffff;
     text-align: center;
 }
 
@@ -88,4 +88,12 @@ h1:hover {
 .button:hover {
     background-color: #F57C00;
     transform: scale(1.05);
+}
+
+.credit {
+    display: flex;
+    border: 10px solid #3A506B;
+    padding: 10px;
+    border-radius: 8px;
+    flex-direction: column;
 }

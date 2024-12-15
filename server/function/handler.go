@@ -10,17 +10,7 @@ func (jeu *Engine) Handler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("front/template/start.html"))
 
 	// Je crée une variable qui définit ma structure
-	data := Engine{
-		Musique: jeu.Musique,
-	}
-
-	if r.Method == "POST" {
-		buttonValue := r.FormValue("button")
-		if buttonValue == "sons" {
-			jeu.Musique = !jeu.Musique
-			w.Header().Set("Refresh", "0")
-		}
-	}
+	data := Engine{}
 
 	// Définir le nombre de vies par défaut a 11
 	jeu.ViesRestantes = 11

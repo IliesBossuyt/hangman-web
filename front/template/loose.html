@@ -10,21 +10,28 @@
 
     <h1>Dommage...</h1>
     <h3>Vous avez perdu</h3>
-    <div class="Score">
-    <h3>Score: {{ .Score }}</h3>
-    <h3>MeilleurScore: {{ .MeilleurScore }}</h3>
-    </div>
     <h2>Le mot était {{ .MotADeviner }}</h2>
+
+    <div class="container-score">
     
-    <div class="container">
-
-        <form method="post">
-            <button class="button" name="button" value="Nouvellepartie">Nouvelle partie</button>
-        </form>
-
-        <form action="https://www.google.com/" method="get">
-            <button class="button" type="submit">Quitter</button>
-        </form>
-    </div>
-</body>
-</html>
+        <div class="container">
+    
+            <!-- Créer une nouvelle partie -->
+            <form method="post">
+                <button class="button" name="button" value="Nouvellepartie">Nouvelle partie</button>
+            </form>
+    
+            <!-- Quitter le jeu -->
+            <form action="https://www.google.com/" method="get">
+                <button class="button" type="submit">Quitter</button>
+            </form>
+        </div> 
+        <!-- Afficher le score -->
+        <div class="Score">
+            <h3>Score: {{ .Score }}</h3>
+            <h3>Meilleur Score: {{ .MeilleurScore }}</h3>
+        </div>
+        </div>
+    </body>
+    </html>
+    

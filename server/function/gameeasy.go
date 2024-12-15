@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"strings"
@@ -21,8 +22,10 @@ func (jeu *Engine) GameEasy(w http.ResponseWriter, r *http.Request) {
 		Score:            jeu.Score,
 	}
 
+	// Réinitialiser jeu.Message
 	jeu.Message = ""
 
+	// Récupèrer le mot ou la lettre séléctionné par le joueur
 	if r.Method == "POST" {
 		mot := r.FormValue("mot")
 
@@ -46,15 +49,37 @@ func (jeu *Engine) GameEasy(w http.ResponseWriter, r *http.Request) {
 				if string(jeu.MotADeviner[i]) == mot {
 					jeu.LettresaTrouvées[i] = mot
 					jeu.Message = ("Bonne lettre !")
+					// Donner du score
 					jeu.Score += jeu.Value
-					w.Header().Set("Refresh", "0")
+					// Jouer le son
+					fmt.Fprintf(w, `
+					<script>
+						window.onload = function() {
+							var audio = new Audio('/static/song/correct.mp3');
+							audio.play();
+							audio.onended = function() {
+								location.replace(location.href);
+							};
+						};
+					</script>`)
 				}
 			}
 		} else if mot <= "z" && mot >= "a" && len(mot) == 1 {
 			jeu.Message = ("Mauvaise lettre !")
 			jeu.ViesRestantes--
+			// Avacncer le pendu
 			jeu.EtapePendu()
-			w.Header().Set("Refresh", "0")
+			// Jouer le son
+			fmt.Fprintf(w, `
+			<script>
+				window.onload = function() {
+					var audio = new Audio('/static/song/wrong.mp3');
+					audio.play();
+					audio.onended = function() {
+						location.replace(location.href);
+					};
+				};
+			</script>`)
 		}
 
 		// Ajouter la lettre à la liste des lettres proposées
@@ -69,13 +94,25 @@ func (jeu *Engine) GameEasy(w http.ResponseWriter, r *http.Request) {
 
 		// Vérifier si la saisie est égal au mot
 		if mot == jeu.MotADeviner {
+			// Ajouter du score
 			jeu.Score += jeu.Value + 100
 			http.Redirect(w, r, "/win", http.StatusFound)
 		} else if len(mot) > 2 {
 			jeu.ViesRestantes -= 2
 			jeu.Message = ("Mot incorrect !")
+			// Avancer le pendu
 			jeu.EtapePendu()
-			w.Header().Set("Refresh", "0")
+			// Jouer le son
+			fmt.Fprintf(w, `
+			<script>
+				window.onload = function() {
+					var audio = new Audio('/static/song/wrong.mp3');
+					audio.play();
+					audio.onended = function() {
+						location.replace(location.href);
+					};
+				};
+			</script>`)
 		}
 
 	}
@@ -84,6 +121,7 @@ func (jeu *Engine) GameEasy(w http.ResponseWriter, r *http.Request) {
 	if jeu.ViesRestantes <= 0 {
 		http.Redirect(w, r, "/loose", http.StatusFound)
 	} else if strings.Join(jeu.LettresaTrouvées, "") == jeu.MotADeviner {
+		// Ajouter du score
 		jeu.Score += jeu.Value + 100
 		http.Redirect(w, r, "/win", http.StatusFound)
 	}

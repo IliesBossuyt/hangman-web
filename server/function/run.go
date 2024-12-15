@@ -3,6 +3,7 @@ package engine
 import "net/http"
 
 func Run(jeu *Engine) {
+	// Définir les différentes routes
 	http.HandleFunc("/", jeu.Handler) // Ici, quand on arrive sur la racine, on appelle la fonction Handler
 	http.HandleFunc("/difficult", jeu.Difficult)
 	http.HandleFunc("/gameeasy", jeu.GameEasy)

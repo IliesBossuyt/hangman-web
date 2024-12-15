@@ -16,17 +16,20 @@
     
     <div class="container">
 
+        <!-- Créer une nouuvelle partie -->
         <form method="post">
             <button class="button" name="button" value="Nouvellepartie">Nouvelle partie</button>
         </form>
 
+        <!-- Quitter le jeu -->
         <form action="https://www.google.com/" method="get">
             <button class="button" type="submit">Quitter</button>
         </form>
     </div> 
+    <!-- Afficher le score -->
     <div class="Score">
         <h3>Score: {{ .Score }}</h3>
-        <h3>MeilleurScore: {{ .MeilleurScore }}</h3>
+        <h3>Meilleur Score: {{ .MeilleurScore }}</h3>
     </div>
     </div>
 </body>

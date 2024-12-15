@@ -26,6 +26,7 @@ func ChargerMotsDepuisFichier() []string {
 	return mots
 }
 
+// Fonction pour charger les mots depuis le fichier "wordshard.txt"
 func ChargerMotsDepuisFichierHard() []string {
 	fichier, _ := os.Open("server/wordlist/wordshard.txt")
 

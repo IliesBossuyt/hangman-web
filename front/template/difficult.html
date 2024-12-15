@@ -5,6 +5,7 @@
     <title>Hangman</title>
     <link rel="stylesheet" href="/static/css/difficult.css">
 </head>
+<!-- Choix de la difficulté -->
 <body> <div class="container">
             <h1>Jeu du Pendu</h1>
             <form method="post">
@@ -16,7 +17,7 @@
             </form>
         </div>
 
-       
+       <!-- Augmenter ou baisser le nombre de vies -->
         <div class="vies-container">
             <form method="post">
                 <button class="button" name="button" value="button+">+</button> 
@@ -28,6 +29,7 @@
             </form>
         </div>
 
+        <!-- Bouton back -->
         <div class="back-container">
             <form action="/start" method="post">
                 <button class="button"name="button" value="Back">Back</button>

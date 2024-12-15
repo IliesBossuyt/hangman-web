@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"strings"
@@ -20,8 +21,10 @@ func (jeu *Engine) GameBonus(w http.ResponseWriter, r *http.Request) {
 		EtapesPendu:      jeu.EtapesPendu,
 	}
 
+	// Réinitialiser jeu.Message
 	jeu.Message = ""
 
+	// Récupèrer le mot ou la lettre séléctionné par le joueur
 	if r.Method == "POST" {
 		mot := r.FormValue("mot")
 
@@ -45,14 +48,35 @@ func (jeu *Engine) GameBonus(w http.ResponseWriter, r *http.Request) {
 				if string(jeu.MotADeviner[i]) == mot {
 					jeu.LettresaTrouvées[i] = mot
 					jeu.Message = ("Bonne lettre !")
-					w.Header().Set("Refresh", "0")
+					// Jouer le son
+					fmt.Fprintf(w, `
+					<script>
+						window.onload = function() {
+							var audio = new Audio('/static/song/correct.mp3');
+							audio.play();
+							audio.onended = function() {
+								location.replace(location.href);
+							};
+						};
+					</script>`)
 				}
 			}
 		} else if mot <= "z" && mot >= "a" && len(mot) == 1 {
 			jeu.Message = ("Mauvaise lettre !")
 			jeu.ViesRestantes--
+			// Avancer le pendu
 			jeu.EtapePendu()
-			w.Header().Set("Refresh", "0")
+			// Jouer le son
+			fmt.Fprintf(w, `
+			<script>
+				window.onload = function() {
+					var audio = new Audio('/static/song/wrong.mp3');
+					audio.play();
+					audio.onended = function() {
+						location.replace(location.href);
+					};
+				};
+			</script>`)
 		}
 
 		// Ajouter la lettre à la liste des lettres proposées
@@ -71,8 +95,19 @@ func (jeu *Engine) GameBonus(w http.ResponseWriter, r *http.Request) {
 		} else if len(mot) > 2 {
 			jeu.ViesRestantes -= 2
 			jeu.Message = ("Mot incorrect !")
+			// Avancer le pendu
 			jeu.EtapePendu()
-			w.Header().Set("Refresh", "0")
+			// Jouer le son
+			fmt.Fprintf(w, `
+			<script>
+				window.onload = function() {
+					var audio = new Audio('/static/song/wrong.mp3');
+					audio.play();
+					audio.onended = function() {
+						location.replace(location.href);
+					};
+				};
+			</script>`)
 		}
 
 	}

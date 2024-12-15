@@ -1,5 +1,6 @@
 package engine
 
+// Je définit les étapes du pendu
 func (jeu *Engine) EtapePendu() {
 	if jeu.ViesRestantes == 11 {
 		jeu.EtapesPendu = "/static/img/etapes/1.png"

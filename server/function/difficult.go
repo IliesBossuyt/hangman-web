@@ -18,6 +18,7 @@ func (jeu *Engine) Difficult(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		buttonValue := r.FormValue("button")
 		if buttonValue == "facile" {
+			// J'initialise le score
 			jeu.Value = 250 / jeu.ViesRestantes
 			jeu.NouveauJeuFacile()
 			jeu.EtapePendu()
@@ -29,6 +30,7 @@ func (jeu *Engine) Difficult(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		buttonValue := r.FormValue("button")
 		if buttonValue == "difficile" {
+			// J'initialise le score
 			jeu.Value = 500 / jeu.ViesRestantes
 			jeu.NouveauJeuDifficile()
 			jeu.EtapePendu()
