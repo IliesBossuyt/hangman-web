@@ -14,8 +14,8 @@ body {
 /* Wrapper principal pour agencer les éléments */
 .page-wrapper {
     display: flex;
-    align-items: center; /* Centre verticalement les éléments */
-    gap: 20px; /* Espacement de base entre .vies-container et .container */
+    align-items: center; 
+    gap: 20px; 
 }
 
 /* Titre principal */
@@ -30,10 +30,10 @@ h1 {
 h2 {
     font-size: 3.5vw;
     font-weight: bold;
-    color: #E0E0E0; /* Texte principal */
+    color: #E0E0E0;
     text-align: center;
     margin-bottom: 15px;
-    border-bottom: 2px solid #333333; /* Ligne discrète pour structurer */
+    border-bottom: 2px solid #333333;
     padding-bottom: 10px;
 }
 
@@ -41,7 +41,7 @@ h2 {
 h3 {
     font-size: 2.5vw;
     font-weight: normal;
-    color: #A3A3A3; /* Couleur secondaire */
+    color: #A3A3A3; 
     text-align: center;
     margin-bottom: 15px;
 }
@@ -78,7 +78,7 @@ h1:hover {
 /* Conteneur pour les vies */
 .vies-container {
     width: 150px;
-    margin-left: 40px; /* Décalage supplémentaire vers la droite */
+    margin-left: 40px; 
 }
 
 /* Conteneur de bas de page */

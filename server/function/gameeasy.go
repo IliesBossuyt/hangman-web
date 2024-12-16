@@ -94,7 +94,7 @@ func (jeu *Engine) GameEasy(w http.ResponseWriter, r *http.Request) {
 
 		// Vérifier si la saisie est égal au mot
 		if mot == jeu.MotADeviner {
-			// Ajouter du score
+			// Donner du score
 			jeu.Score += jeu.Value + 100
 			http.Redirect(w, r, "/win", http.StatusFound)
 		} else if len(mot) > 2 {
@@ -104,15 +104,15 @@ func (jeu *Engine) GameEasy(w http.ResponseWriter, r *http.Request) {
 			jeu.EtapePendu()
 			// Jouer le son
 			fmt.Fprintf(w, `
-			<script>
-				window.onload = function() {
-					var audio = new Audio('/static/song/wrong.mp3');
-					audio.play();
-					audio.onended = function() {
-						location.replace(location.href);
+				<script>
+					window.onload = function() {
+						var audio = new Audio('/static/song/wrong.mp3');
+						audio.play();
+						audio.onended = function() {
+							location.replace(location.href);
+						};
 					};
-				};
-			</script>`)
+				</script>`)
 		}
 
 	}
@@ -125,6 +125,7 @@ func (jeu *Engine) GameEasy(w http.ResponseWriter, r *http.Request) {
 		jeu.Score += jeu.Value + 100
 		http.Redirect(w, r, "/win", http.StatusFound)
 	}
+
 	// J'execute le template avec les données
 	tmpl.Execute(w, data)
 

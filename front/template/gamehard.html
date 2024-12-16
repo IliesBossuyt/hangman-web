@@ -72,11 +72,11 @@
             
         </div>
             <!-- Zone pendu -->
-        <div class="zone-image" method="post">
-            <div class="pendu-container" method="post">
+        <div class="zone-image">
+            <div class="pendu-container">
                 <h2>{{ .ViesRestantes }} vies</h2>   
                 <!-- Afficher le pendu -->
-                    <div method="post">
+                    <div>
                             <img src="{{ .EtapesPendu }}" alt="Image du pendu">
                     </div>
                     <!-- Afficher le score -->
@@ -88,7 +88,7 @@
 
         <!-- Bouton pause -->
         <div class="zone-pause">
-            	<form action="/pause" method="get">
+            	<form action="/pause">
                 	<button class="button" type="submit">Pause</button>
             	</form>
         </div>

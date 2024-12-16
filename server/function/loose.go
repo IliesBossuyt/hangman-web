@@ -17,7 +17,7 @@ func (jeu *Engine) Loose(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Mise à jour du meilleur score
-	if jeu.MeilleurScore < jeu.Score {
+	if  jeu.Score > jeu.MeilleurScore{
 		jeu.MeilleurScore = jeu.Score
 		w.Header().Set("Refresh", "0")
 	}

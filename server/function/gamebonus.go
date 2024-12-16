@@ -77,6 +77,7 @@ func (jeu *Engine) GameBonus(w http.ResponseWriter, r *http.Request) {
 					};
 				};
 			</script>`)
+
 		}
 
 		// Ajouter la lettre à la liste des lettres proposées
