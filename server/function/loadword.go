@@ -45,3 +45,23 @@ func ChargerMotsDepuisFichierHard() []string {
 
 	return mots
 }
+
+// Fonction pour charger les mots depuis le fichier "wordsbonus.txt"
+func ChargerMotsDepuisFichierBonus() []string {
+	fichier, _ := os.Open("server/wordlist/wordsbonus.txt")
+
+	defer fichier.Close()
+
+	var mots []string
+	scanner := bufio.NewScanner(fichier)
+
+	// Lire chaque ligne et ajouter à la liste des mots
+	for scanner.Scan() {
+		mot := strings.TrimSpace(scanner.Text())
+		if mot != "" {
+			mots = append(mots, mot)
+		}
+	}
+
+	return mots
+}

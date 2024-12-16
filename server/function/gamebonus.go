@@ -18,7 +18,7 @@ func (jeu *Engine) GameBonus(w http.ResponseWriter, r *http.Request) {
 		LettresProposées: jeu.LettresProposées,
 		MotProposés:      jeu.MotProposés,
 		Message:          jeu.Message,
-		EtapesPendu:      jeu.EtapesPendu,
+		EtapesBonus:      jeu.EtapesBonus,
 	}
 
 	// Réinitialiser jeu.Message
@@ -65,7 +65,7 @@ func (jeu *Engine) GameBonus(w http.ResponseWriter, r *http.Request) {
 			jeu.Message = ("Mauvaise lettre !")
 			jeu.ViesRestantes--
 			// Avancer le pendu
-			jeu.EtapePendu()
+			jeu.EtapeBonus()
 			// Jouer le son
 			fmt.Fprintf(w, `
 			<script>
@@ -97,7 +97,7 @@ func (jeu *Engine) GameBonus(w http.ResponseWriter, r *http.Request) {
 			jeu.ViesRestantes -= 2
 			jeu.Message = ("Mot incorrect !")
 			// Avancer le pendu
-			jeu.EtapePendu()
+			jeu.EtapeBonus()
 			// Jouer le son
 			fmt.Fprintf(w, `
 			<script>

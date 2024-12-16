@@ -8,6 +8,7 @@ type Engine struct {
 	LettresProposées []string
 	MotProposés      []string
 	EtapesPendu      string
+	EtapesBonus      string
 	Message          string
 	Musique          bool
 	Score            int

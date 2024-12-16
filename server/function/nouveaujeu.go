@@ -72,9 +72,10 @@ func (jeu *Engine) NouveauJeuDifficile() {
 	}
 }
 
+// Fonction pour créer le jeu en mode bonus
 func (jeu *Engine) NouveauJeuBonus() {
 	// Charger les mots
-	//mots = ChargerMotsDepuisFichierBonus()
+	mots = ChargerMotsDepuisFichierBonus()
 
 	// Choisir un mot aléatoire
 	rng := rand.New(rand.NewSource(time.Now().UnixNano()))

@@ -14,6 +14,7 @@ func (jeu *Engine) Difficult(w http.ResponseWriter, r *http.Request) {
 		ViesRestantes: jeu.ViesRestantes,
 	}
 
+
 	// Je redirige vers la page de jeu facile
 	if r.Method == "POST" {
 		buttonValue := r.FormValue("button")
@@ -42,8 +43,9 @@ func (jeu *Engine) Difficult(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		buttonValue := r.FormValue("button")
 		if buttonValue == "bonus" {
-			//jeu.NouveauJeuBonus()
-			jeu.EtapePendu()
+			jeu.ViesRestantes = 7
+			jeu.NouveauJeuBonus()
+			jeu.EtapeBonus()
 			http.Redirect(w, r, "/gamebonus", http.StatusFound)
 		}
 	}
